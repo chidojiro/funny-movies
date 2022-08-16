@@ -27,7 +27,7 @@ export const LoginForm = () => {
       setValue('password', '');
 
       if (e.message === ApiErrors.INVALID) {
-        toast.error('Invalid email or password!');
+        toast.error('Incorrect email or password!');
         return false;
       }
     },
