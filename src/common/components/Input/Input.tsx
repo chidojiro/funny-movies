@@ -6,11 +6,11 @@ import React from 'react';
 export type InputProps = Omit<JSX.IntrinsicElements['input'], 'ref' | 'size'> &
   PlaceholderInputProps & {
     error?: boolean;
-    size: 'sm' | 'md';
+    size?: 'sm' | 'md';
   };
 
 export const Input = React.forwardRef(
-  ({ error, className, placeholderInputRef: _, size = 'sm', ...restProps }: InputProps, ref: any) => {
+  ({ error, className, placeholderInputRef: _, size = 'md', ...restProps }: InputProps, ref: any) => {
     return (
       <input
         ref={ref}
