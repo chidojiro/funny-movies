@@ -6,3 +6,4 @@ export { ObjectUtils } from './object';
 export { PromiseUtils } from './promise';
 export { ReactUtils } from './react';
 export { SessionStorageUtils } from './sessionStorage';
+export { StringUtils } from './string';
