@@ -49,7 +49,7 @@ export const CreateAccountModal = ({ open, onClose, ...restProps }: CreateAccoun
   });
 
   return (
-    <Modal open={open} onClose={onClose} {...restProps}>
+    <Modal open={open} onClose={onClose} {...restProps} data-testid='create-account-modal'>
       <Modal.Title>Create an account</Modal.Title>
       <Modal.Content>
         <Form methods={methods} onSubmit={handleRegister} className='flex gap-4 flex-col'>
@@ -60,17 +60,17 @@ export const CreateAccountModal = ({ open, onClose, ...restProps }: CreateAccoun
               placeholder='Email'
               size='md'
               rules={{
-                pattern: {
-                  value: EMAIL_PATTERN,
-                  message: 'Invalid email!',
-                },
                 required: {
                   value: true,
                   message: 'Email is required!',
                 },
+                pattern: {
+                  value: EMAIL_PATTERN,
+                  message: 'Invalid email!',
+                },
               }}
             />
-            <Form.ErrorMessage name='email' />
+            <Form.ErrorMessage name='email' data-testid='email-error' />
           </div>
           <div>
             <Form.Input
@@ -79,13 +79,17 @@ export const CreateAccountModal = ({ open, onClose, ...restProps }: CreateAccoun
               placeholder='Password'
               size='md'
               rules={{
+                required: {
+                  value: true,
+                  message: 'Password is required!',
+                },
                 pattern: {
                   value: PASSWORD_PATTERN,
                   message: 'Password must be at least eight characters!',
                 },
               }}
             />
-            <Form.ErrorMessage name='password' />
+            <Form.ErrorMessage name='password' data-testid='password-error' />
           </div>
           <Button
             className='mt-4'
