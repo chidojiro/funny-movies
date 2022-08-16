@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 export type ErrorMessageProps = {
   name: string | string[];
-  className?: string;
 };
 
 export const ErrorMessage = ({ name }: ErrorMessageProps) => {
