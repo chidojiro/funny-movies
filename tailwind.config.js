@@ -13,6 +13,20 @@ module.exports = {
         primary: theme.colors.indigo[500],
         danger: theme.colors.red[500],
       }),
+      keyframes: {
+        'modal-enter': {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        'modal-leave': {
+          '0%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+      },
+      animation: {
+        'modal-enter': 'modal-enter .2s ease-out',
+        'modal-leave': 'modal-leave .2s ease-in',
+      },
     },
   },
   plugins: [],

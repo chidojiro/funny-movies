@@ -30,6 +30,16 @@ const getUser = (id: string) => {
 const createUser = async (payload: Omit<User, 'id'>) => {
   await PromiseUtils.sleep(1000);
 
+  let existingUser;
+
+  try {
+    existingUser = getUserByEmail(payload.email);
+  } catch {
+    // Do nothing
+  }
+
+  if (existingUser) throw new Error(ApiErrors.ALREADY_EXIST);
+
   const id = UUID();
 
   const users = getUsers();

@@ -40,7 +40,11 @@ export const Modal = ({ className, children, size = 'md', open, onClose, ...rest
   return (
     <Portal>
       <div
-        className={clsx(StringUtils.withProjectClassNamePrefix('modal'), 'fixed top-0 left-0 w-screen h-screen z-50')}>
+        className={clsx(
+          StringUtils.withProjectClassNamePrefix('modal'),
+          'fixed top-0 left-0 w-screen h-screen z-50',
+          open ? 'animate-modal-enter' : 'animate-modal-leave'
+        )}>
         <div style={{ background: 'rgba(23,36,45,0.1)' }} className={clsx('w-full h-full')} onClick={onClose}></div>
         <div
           className={clsx(

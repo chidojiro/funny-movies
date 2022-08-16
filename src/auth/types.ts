@@ -11,4 +11,5 @@ export type User = {
 
 export enum ApiErrors {
   INVALID = 'INVALID',
+  ALREADY_EXIST = 'ALREADY_EXIST',
 }

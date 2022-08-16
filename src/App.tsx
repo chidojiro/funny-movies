@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <BrowserRouter>
-      <ToastContainer position='top-center' />
+      <ToastContainer position='top-center' hideProgressBar autoClose={3000} />
       <div>
         <MainLayout />
       </div>

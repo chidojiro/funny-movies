@@ -55,7 +55,11 @@ FormInput.displayName = 'FormInput';
 
 const FormErrorMessage = ({ name, className, ...restProps }: ErrorMessageProps & JSX.IntrinsicElements['p']) => (
   <p
-    className={clsx(StringUtils.withProjectClassNamePrefix('form-error-message'), 'text-danger text-xs', className)}
+    className={clsx(
+      StringUtils.withProjectClassNamePrefix('form-error-message'),
+      'text-danger text-xs mt-1',
+      className
+    )}
     {...restProps}>
     <ErrorMessage name={name} />
   </p>
