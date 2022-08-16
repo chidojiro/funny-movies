@@ -1,4 +1,4 @@
-import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookie';
+import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookieState';
 import { useFetcher } from '@/common/hooks';
 import React from 'react';
 import { ProfileApis } from './apis';
@@ -14,7 +14,6 @@ export const useProfile = () => {
     mutate,
   } = useFetcher(accessToken && ['useProfile', accessToken], () => ProfileApis.getProfile(accessToken), {
     onError: e => {
-      console.log(e);
       return false;
     },
   });

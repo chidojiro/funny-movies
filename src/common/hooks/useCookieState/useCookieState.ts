@@ -13,5 +13,10 @@ export const useCookieState = (key: string, defaultState: string) => {
     []
   );
 
-  return useEventBasedState({ name: NAME, storageKey: key, defaultState, storage: cookieStorage });
+  return useEventBasedState({
+    name: NAME,
+    storageKey: key,
+    defaultState: (value: string | undefined) => value || defaultState || '',
+    storage: cookieStorage,
+  });
 };

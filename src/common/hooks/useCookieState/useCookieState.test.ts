@@ -1,15 +1,16 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
+import { CookiesUtils } from '@/common/utils';
 import { getUseEventBasedStateEventKey } from '../useEventBasedState';
 import { NAME, useCookieState } from './useCookieState';
 
 const key = 'key';
 const eventKey = getUseEventBasedStateEventKey(NAME, key);
 const defaultState = 'defaultState';
-const cookieState = 'cookieState';
+const localStorageState = 'localStorageState';
 const newState = 'newState';
 
-const getWindowState = () => (window as any)[key];
+const getLocalStorageState = () => CookiesUtils.get(key);
 
 const originalDispatchEvent = window.dispatchEvent;
 
@@ -18,7 +19,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  (window as any)[key] = undefined;
+  CookiesUtils.set(key, '');
 });
 
 it('should accept default state', () => {
@@ -28,11 +29,11 @@ it('should accept default state', () => {
 });
 
 it('should take corresponding window value as default state', () => {
-  (window as any)[key] = cookieState;
+  CookiesUtils.set(key, localStorageState);
 
   const { result } = renderHook(() => useCookieState(key, defaultState));
 
-  expect(result.current[0]).toBe(cookieState);
+  expect(result.current[0]).toBe(localStorageState);
 });
 
 it('should set internal state, save to window and dispatch new state when call setState with newState', () => {
@@ -43,7 +44,7 @@ it('should set internal state, save to window and dispatch new state when call s
   });
 
   expect(result.current[0]).toBe(newState);
-  expect(getWindowState()).toBe(newState);
+  expect(getLocalStorageState()).toBe(newState);
   expect(window.dispatchEvent).toBeCalledWith(expect.objectContaining({ type: eventKey }));
 });
 
@@ -59,7 +60,7 @@ it('should set internal state, save to window and dispatch new state when call s
   });
 
   expect(result.current[0]).toBe(newState);
-  expect(getWindowState()).toBe(newState);
+  expect(getLocalStorageState()).toBe(newState);
   expect(window.dispatchEvent).toBeCalledWith(expect.objectContaining({ type: eventKey }));
 });
 

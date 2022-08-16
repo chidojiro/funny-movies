@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest --maxWorkers=1"
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": [

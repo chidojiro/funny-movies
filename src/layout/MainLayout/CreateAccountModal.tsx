@@ -1,7 +1,7 @@
 import { AuthApis } from '@/auth/apis';
 import { PASSWORD_PATTERN } from '@/auth/constants';
 import { ApiErrors, LoginPayload } from '@/auth/types';
-import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookie';
+import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookieState';
 import { Button, Form } from '@/common/components';
 import { Modal, ModalProps } from '@/common/components/Modal';
 import { EMAIL_PATTERN } from '@/common/constants';

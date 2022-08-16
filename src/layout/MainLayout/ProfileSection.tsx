@@ -1,5 +1,5 @@
 import { AuthApis } from '@/auth/apis';
-import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookie';
+import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookieState';
 import { Button } from '@/common/components';
 import { useHandler } from '@/common/hooks';
 import { SignOutIcon } from '@/common/icons';
