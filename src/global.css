@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: inherit;
+    color: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+  }
+
+  html {
+    @apply box-border text-gray-600;
+  }
+
   h1,
   h2,
   h3,
