@@ -11,6 +11,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
+  ignorePatterns: ['config-overrides.js', '.eslintrc.js', 'tailwind.config.js'],
   rules: {
     'prettier/prettier': [
       'error',
