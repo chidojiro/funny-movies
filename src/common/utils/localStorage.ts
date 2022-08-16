@@ -3,8 +3,12 @@ const get = <T = unknown>(key: string, defaultValue?: T) => {
     const storedValue: T | null = JSON.parse(localStorage.getItem(key) as any);
 
     return storedValue ?? defaultValue;
-  } catch {
-    return defaultValue;
+  } catch (e) {
+    if (defaultValue) {
+      return defaultValue;
+    }
+
+    throw e;
   }
 };
 
