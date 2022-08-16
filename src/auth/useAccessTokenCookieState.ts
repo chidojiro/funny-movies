@@ -1,3 +1,3 @@
 import { useCookieState } from '@/common/hooks';
 
-export const useAccessTokenCookieState = () => useCookieState('useAccessTokenCookieState', '123123123');
+export const useAccessTokenCookieState = () => useCookieState('token', '');
