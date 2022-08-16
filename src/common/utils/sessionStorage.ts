@@ -12,7 +12,7 @@ const set = <T = unknown>(key: string, data: T) => {
   sessionStorage.setItem(key, JSON.stringify(data));
 };
 
-const clear = sessionStorage.clear;
+const clear = () => sessionStorage.clear();
 
 const remove = sessionStorage.removeItem;
 

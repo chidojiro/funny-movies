@@ -1,6 +1,6 @@
 import { AuthApis } from '@/auth/apis';
 import { ApiErrors, LoginPayload } from '@/auth/types';
-import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookie';
+import { useAccessTokenCookieState } from '@/auth/useAccessTokenCookieState';
 import { Button, Form } from '@/common/components';
 import { useHandler } from '@/common/hooks';
 import { SignInIcon } from '@/common/icons';
@@ -34,7 +34,11 @@ export const LoginForm = () => {
   });
 
   return (
-    <Form methods={methods} onSubmit={handleLogin} className='relative flex items-center gap-2'>
+    <Form
+      methods={methods}
+      onSubmit={handleLogin}
+      className='relative flex items-center gap-2'
+      data-testid='login-form'>
       <Form.Input type='email' name='email' placeholder='Email' size='sm' />
       <Form.Input type='password' name='password' placeholder='Password' size='sm' />
       <Button loading={isLoggingIn} iconRight={<SignInIcon />} variant='solid' type='submit'>

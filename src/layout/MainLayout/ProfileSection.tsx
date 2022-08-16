@@ -21,7 +21,7 @@ export const ProfileSection = () => {
   const { email } = profile;
 
   return (
-    <div className='flex items-center gap-6'>
+    <div className='flex items-center gap-6' data-testid='profile-section'>
       <p>{email}</p>
       <Button variant='solid'>Share a movie</Button>
       <Button variant='outline' onClick={handleLogout} iconRight={<SignOutIcon />} loading={isLoading}>
