@@ -19,9 +19,5 @@ export const ProtectedRoute = ({ ...restProps }: ProtectedRouteProps) => {
     return null;
   }
 
-  return (
-    <React.Suspense fallback={<MainLayout />}>
-      <Route {...restProps} />
-    </React.Suspense>
-  );
+  return <Route {...restProps} />;
 };
