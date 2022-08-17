@@ -27,6 +27,16 @@ const getPaginatedMovies = async ({ page, limit }: PaginationParams) => {
   );
 };
 
+const getMovie = async (id: string) => {
+  const movies = await getMovies();
+
+  const movie = Object.values(movies).find(movie => movie.id === id);
+
+  if (!movie) throw new Error(ApiErrors.NOT_FOUND);
+
+  return movie;
+};
+
 const getMovieByOriginalId = async (originalId: string) => {
   const movies = await getMovies();
 
@@ -81,4 +91,37 @@ const createMovie = async (url: string, userId: string) => {
   return newMovie;
 };
 
-export const MovieLocalService = { createMovie, getMovies: getPaginatedMovies };
+const toggleLike = async (movie: Movie, userId: string) => {
+  const movies = await getMovies();
+
+  const updatedMovie: Movie = {
+    ...movie,
+    likedBy: movie.likedBy.includes(userId) ? movie.likedBy.filter(id => id !== userId) : [...movie.likedBy, userId],
+    dislikedBy: movie.dislikedBy.includes(userId) ? movie.dislikedBy.filter(id => id !== userId) : movie.dislikedBy,
+  };
+
+  LocalStorageUtils.set('movies', { ...movies, [updatedMovie.id]: updatedMovie });
+
+  return updatedMovie;
+};
+
+const toggleDislike = async (movie: Movie, userId: string) => {
+  const movies = await getMovies();
+
+  const youtubeVideo = await YoutubeLocalService.getVideo(movie.originalId);
+
+  const updatedMovie: Movie = {
+    ...movie,
+    ...youtubeVideo,
+    likedBy: movie.likedBy.includes(userId) ? movie.likedBy.filter(id => id !== userId) : movie.likedBy,
+    dislikedBy: movie.dislikedBy.includes(userId)
+      ? movie.dislikedBy.filter(id => id !== userId)
+      : [...movie.dislikedBy, userId],
+  };
+
+  LocalStorageUtils.set('movies', { ...movies, [updatedMovie.id]: updatedMovie });
+
+  return updatedMovie;
+};
+
+export const MovieLocalService = { createMovie, getMovies: getPaginatedMovies, toggleDislike, toggleLike, getMovie };

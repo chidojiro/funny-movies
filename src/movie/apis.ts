@@ -4,4 +4,8 @@ const createMovie = MovieLocalService.createMovie;
 
 const getMovies = MovieLocalService.getMovies;
 
-export const MovieApis = { createMovie, getMovies };
+const toggleLike = MovieLocalService.toggleLike;
+
+const toggleDislike = MovieLocalService.toggleDislike;
+
+export const MovieApis = { createMovie, getMovies, toggleLike, toggleDislike };
