@@ -7,17 +7,18 @@ import { ApiErrors } from '@/auth/types';
 
 const getVideo = (id: string) =>
   RestApis.get(YOUTUBE__VIDEO_ENDPOINT, {
-    params: { key: YOUTUBE_API_KEY, id, part: ['snippet'] },
+    params: { key: YOUTUBE_API_KEY, id, part: ['snippet', 'player'] },
     paramsSerializer: params => {
       return qs.stringify(params, { arrayFormat: 'repeat' });
     },
   })
     .then((data: any) => {
       const snippet = data.items[0]?.snippet;
-      if (!snippet) throw new Error(ApiErrors.NOT_FOUND);
+      const embedHtml = data.items[0]?.player?.embedHtml;
+      if (!snippet || !embedHtml) throw new Error(ApiErrors.NOT_FOUND);
 
       const { title, description } = snippet;
-      return { title, description } as YoutubeVideo;
+      return { title, description, embedHtml } as YoutubeVideo;
     })
     .catch(e => {
       throw new Error(ApiErrors.NOT_FOUND);
