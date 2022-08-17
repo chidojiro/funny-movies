@@ -21,7 +21,7 @@ const getUser = (id: string) => {
   const user = getUsers()[id];
 
   if (!user) {
-    throw new Error();
+    throw new Error(ApiErrors.NOT_FOUND);
   }
 
   return user;
@@ -76,7 +76,7 @@ const getUserByEmail = (email: string) => {
 
   const user = Object.values(users).find(user => user.email === email);
 
-  if (!user) throw new Error(ApiErrors.INVALID);
+  if (!user) throw new Error(ApiErrors.NOT_FOUND);
 
   return user;
 };
@@ -84,9 +84,14 @@ const getUserByEmail = (email: string) => {
 const login = async (payload: LoginPayload) => {
   await PromiseUtils.sleep(1000);
 
-  const existingUser = getUserByEmail(payload.email);
+  let existingUser;
+  try {
+    existingUser = getUserByEmail(payload.email);
+  } catch (e) {
+    throw new Error(ApiErrors.INVALID);
+  }
 
-  if (!existingUser || !isEqual(payload, { email: existingUser.email, password: existingUser.password }))
+  if (!isEqual(payload, { email: existingUser.email, password: existingUser.password }))
     throw new Error(ApiErrors.INVALID);
 
   return { accessToken: createAccessToken(existingUser.id), profile: extractProfileFromUser(existingUser) };

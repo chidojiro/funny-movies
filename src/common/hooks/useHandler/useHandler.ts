@@ -31,6 +31,7 @@ export const useHandler = <T = void>(
 
   const _configs: SWRConfiguration = {
     onError: async (error: unknown) => {
+      console.trace(error);
       const shouldUseDefaultErrorHandler = onError?.(error, argsRef.current ?? []) ?? true;
 
       if (!shouldUseDefaultErrorHandler) return;

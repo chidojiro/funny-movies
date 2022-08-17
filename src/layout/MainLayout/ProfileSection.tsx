@@ -4,6 +4,8 @@ import { Button } from '@/common/components';
 import { useHandler } from '@/common/hooks';
 import { SignOutIcon } from '@/common/icons';
 import { useProfile } from '@/profile/useProfile';
+import { ShareMovieRoutes } from '@/share-movie/routes';
+import { Link } from 'react-router-dom';
 
 export const ProfileSection = () => {
   const [, setAccessToken] = useAccessTokenCookieState();
@@ -23,7 +25,9 @@ export const ProfileSection = () => {
   return (
     <div className='flex items-center gap-6' data-testid='profile-section'>
       <p>{email}</p>
-      <Button variant='solid'>Share a movie</Button>
+      <Link to={ShareMovieRoutes.ShareMovie.path}>
+        <Button variant='solid'>Share a movie</Button>
+      </Link>
       <Button variant='outline' onClick={handleLogout} iconRight={<SignOutIcon />} loading={isLoading}>
         Logout
       </Button>

@@ -16,6 +16,7 @@ export const useFetcher = <T = unknown>(
   const { onError, laggy, ...restConfigs } = configs ?? {};
 
   const handleError: SWRConfiguration['onError'] = async (error, key, config) => {
+    console.trace(error);
     const shouldUseDefaultErrorHandler = onError?.(error, key, config) ?? true;
 
     if (!shouldUseDefaultErrorHandler) return;

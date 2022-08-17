@@ -1,4 +1,4 @@
-export type YoutubeVideoLocalization = {
+export type YoutubeVideo = {
   title: string;
   description: string;
 };
