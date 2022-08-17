@@ -3,8 +3,10 @@ import { useFetcher } from '@/common/hooks';
 import React from 'react';
 import { ProfileApis } from './apis';
 
-export const useProfile = () => {
+export const useProfile = (id?: string) => {
   const [accessToken] = useAccessTokenCookieState();
+
+  const fetcher = id ? ProfileApis.getProfile : ProfileApis.getMyProfile;
 
   const {
     data: profile,
@@ -12,7 +14,7 @@ export const useProfile = () => {
     isValidating,
     isLagging,
     mutate,
-  } = useFetcher(accessToken && ['useProfile', accessToken], () => ProfileApis.getProfile(accessToken), {
+  } = useFetcher((id ?? accessToken) && ['useProfile', id ?? accessToken], () => fetcher(id ?? accessToken), {
     onError: e => {
       return false;
     },

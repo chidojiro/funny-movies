@@ -1,8 +1,13 @@
+import { Profile } from '@/profile/types';
+
 export type Movie = {
   id: string;
   originalId: string;
-  userId: string;
+  sharedBy: Profile;
   url: string;
-  likes: number;
-  dislikes: number;
+  likedBy: string[];
+  dislikedBy: string[];
+  title: string;
+  description: string;
+  embedHtml: string;
 };

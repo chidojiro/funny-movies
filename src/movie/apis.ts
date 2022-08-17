@@ -2,4 +2,6 @@ import { MovieLocalService } from './localService';
 
 const createMovie = MovieLocalService.createMovie;
 
-export const MovieApis = { createMovie };
+const getMovies = MovieLocalService.getMovies;
+
+export const MovieApis = { createMovie, getMovies };

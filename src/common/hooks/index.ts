@@ -9,3 +9,4 @@ export * from './useMountEffect';
 export * from './useOnEventOutside';
 export * from './useEventBasedState';
 export * from './useCookieState';
+export * from './useInfiniteData';

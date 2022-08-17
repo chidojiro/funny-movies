@@ -1,17 +1,34 @@
-import { PromiseUtils } from './../common/utils/promise';
-import { Movie } from './types';
+import { AuthLocalService } from '@/auth/localService';
 import { ApiErrors } from '@/auth/types';
+import { LocalStorageUtils } from '@/common/utils';
+import { PaginationParams } from '@/rest/types';
 import { YoutubeLocalService } from '@/youtube/localService';
 import URI from 'urijs';
 import { v4 as UUID } from 'uuid';
-import { LocalStorageUtils } from '@/common/utils';
+import { PromiseUtils } from './../common/utils/promise';
+import { Movie } from './types';
 
 const MOVIES_KEY = 'movies';
 
-const getMovies = () => (LocalStorageUtils.get(MOVIES_KEY) as Record<string, Movie>) ?? {};
+const getMovies = async () => {
+  await PromiseUtils.sleep(1000);
 
-const getMovieByOriginalId = (originalId: string) => {
-  const movies = getMovies();
+  return (LocalStorageUtils.get(MOVIES_KEY) as Record<string, Movie>) ?? {};
+};
+
+const getPaginatedMovies = async ({ page, limit }: PaginationParams) => {
+  const movies = Object.values(await getMovies());
+
+  return Promise.all(
+    movies.slice((page - 1) * limit, page * limit).map(async movie => {
+      const youtubeVideo = await YoutubeLocalService.getVideo(movie.originalId);
+      return { ...movie, ...youtubeVideo };
+    })
+  );
+};
+
+const getMovieByOriginalId = async (originalId: string) => {
+  const movies = await getMovies();
 
   const movie = Object.values(movies).find(movie => movie.originalId === originalId);
 
@@ -21,7 +38,7 @@ const getMovieByOriginalId = (originalId: string) => {
 };
 
 const createMovie = async (url: string, userId: string) => {
-  await PromiseUtils.sleep(1000);
+  const profile = AuthLocalService.extractProfileFromUser(AuthLocalService.getUser(userId));
 
   let youtubeVideoId;
   try {
@@ -35,7 +52,7 @@ const createMovie = async (url: string, userId: string) => {
 
   let existingMovie;
   try {
-    existingMovie = getMovieByOriginalId(youtubeVideoId);
+    existingMovie = await getMovieByOriginalId(youtubeVideoId);
   } catch {
     // Do nothing
   }
@@ -49,16 +66,19 @@ const createMovie = async (url: string, userId: string) => {
     id,
     originalId: youtubeVideoId,
     url,
-    userId,
-    likes: 0,
-    dislikes: 0,
+    sharedBy: profile,
+    likedBy: [],
+    dislikedBy: [],
+    title: '',
+    description: '',
+    embedHtml: '',
   };
 
-  const movies = getMovies();
+  const movies = await getMovies();
 
   LocalStorageUtils.set('movies', { ...movies, [id]: newMovie });
 
   return newMovie;
 };
 
-export const MovieLocalService = { createMovie };
+export const MovieLocalService = { createMovie, getMovies: getPaginatedMovies };
