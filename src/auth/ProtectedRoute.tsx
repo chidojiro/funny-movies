@@ -6,7 +6,7 @@ import { Route, RouteProps, useHistory } from 'react-router-dom';
 
 export type ProtectedRouteProps = RouteProps;
 
-export const ProtectedRoute = ({ path, component }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({ ...restProps }: ProtectedRouteProps) => {
   const { profile, isInitializingProfile } = useProfile();
   const history = useHistory();
 
@@ -21,7 +21,7 @@ export const ProtectedRoute = ({ path, component }: ProtectedRouteProps) => {
 
   return (
     <React.Suspense fallback={<MainLayout />}>
-      <Route path={path} component={component} exact />
+      <Route {...restProps} />
     </React.Suspense>
   );
 };
